@@ -1,3 +1,5 @@
+### Import files ###
+
 import pygame, random
 
 from Map import mapp
@@ -24,15 +26,14 @@ GameOver = pygame.image.load("GameOver.png")
 #Current menu page
 MenuScreen = MainMenu
 
-### GUI ###
+### GUI end ###
 
 #Images of states of the map
-#No Key, No Door
+#Not collected key
 imageMap = pygame.image.load("imageMap.png")
-#Key, No Door
+#Collected key
 imageMap2 = pygame.image.load("imageMap2.png")
-#Key and door
-imageMap3 = pygame.image.load("imageMap3.png")
+
 
 #Image of current state of map
 backgroundImage = imageMap
@@ -50,485 +51,371 @@ pygame.display.set_caption("Virtual Robot Simulator")
 all_sprites_list = pygame.sprite.Group()
 wall_list = pygame.sprite.Group()
 
+### Wall sprites ###
 
-##Pierwsze 0 = Lewo Prawo
-##Drugie 0 = Góra , Dół
+##First 0 = Left, right
+##Second 0 = Up, down
 
-##Pierwsze 40 = Width/Długość
-##Drugie 40 = Height/Wysokość
+##First 40 = Width
+##Second 40 = Height
 
+#Creating wall sprites
+#Adding wall sprites to sprite groups
 wall = Wall(0, 0, 1600,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall(0,760,1600,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall(0,40,40,720)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall(0,40,40,720)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall(80,40,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall(1560,40,40,720)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (280,40,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (720,40,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (40,160,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (120,200,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (40,440,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (40,600,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (160,80,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (200,120,200,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (360,80,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (240,160,40,160)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (200,200,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (320,160,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (40,240,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
-wall= Wall (40,280,200,40)
+wall= Wall (40,280,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
-wall= Wall (280,240,160,40)
+wall= Wall (200,280,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
+
+wall= Wall (280,240,80,40)
+wall_list.add(wall)
+
+wall= Wall (400,240,40,40)
+wall_list.add(wall)
 
 wall= Wall (400,200,160,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (440,80,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (480,80,200,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
-
-wall= Wall (640,120,40,40)
-wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (520,160,240,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
-
-wall= Wall (520,160,240,40)
-wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (720,200,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (760,240,200,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (800,80,40,160)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (840,80,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (960,80,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (880,160,160,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1040,80,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1080,120,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1120,160,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1160,80,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1320,80,200,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1000,200,40,160)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1040,240,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1200,120,40,240)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1320,120,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1280,160,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1400,160,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1480,160,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1360,200,160,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
-
-wall= Wall (1360,240,40,40)
-wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1480,240,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1440,280,40,120)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1240,240,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (600,240,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (480,280,200,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (320,320,200,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (80,360,280,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
-wall= Wall (640,320,360,40)
+wall= Wall (640,320,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
-wall= Wall (840,360,40,40)
+wall= Wall (880,320,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1120,240,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1080,320,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1280,280,40,200)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1240,400,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1320,320,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1520,360,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
-wall= Wall (160,400,40,280)
+wall= Wall (160,400,40,200)
 wall_list.add(wall)
-all_sprites_list.add(wall)
+
+wall= Wall (160,640,40,40)
+wall_list.add(wall)
 
 wall= Wall (200,440,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (320,400,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (400,400,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (560,360,40,160)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (640,400,200,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (680,440,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (800,440,160,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (920,400,280,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1080,360,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1360,400,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1080,440,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1400,440,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
-
-wall= Wall (1400,440,120,40)
-wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (280,440,160,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (360,480,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (360,520,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (480,480,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (600,480,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1000,480,40,160)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (80,520,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (280,520,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (680,520,320,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1160,480,200,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1400,480,40,160)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1440,520,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1080,520,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (240,560,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
-wall= Wall (440,560,200,40)
+wall= Wall (440,560,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
+
+wall= Wall (600,560,40,40)
+wall_list.add(wall)
 
 wall= Wall (680,560,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1160,560,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1280,560,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (320,600,160,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (600,600,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (760,600,200,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (760,600,200,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1040,600,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1200,600,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1320,600,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1480,600,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1480,640,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (80,680,280,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (320,640,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (520,640,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
-wall= Wall (400,680,400,40)
+wall= Wall (400,680,240,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
+
+wall= Wall (680,680,120,40)
+wall_list.add(wall)
 
 wall= Wall (760,640,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (840,680,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (920,640,40,80)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (960,680,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1000,720,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1080,640,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1160,640,200,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1080,680,120,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
-
-wall= Wall (1200,720,40,40)
-wall_list.add(wall)
-all_sprites_list.add(wall)
 
 wall= Wall (1280,680,80,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
-wall= Wall (1400,680,40,80)
+wall= Wall (1400,680,40,40)
 wall_list.add(wall)
-all_sprites_list.add(wall)
 
+### Wall sprrites end ###
 
 # Create the player paddle object
 player = Player(1530, 650)
@@ -539,6 +426,8 @@ AIrobot.walls = wall_list
  
 all_sprites_list.add(player)
 all_sprites_list.add(AIrobot)
+
+
 
 
 #Initialise Map
@@ -559,19 +448,22 @@ speed = 5
 while not done:
 
     clock.tick(60)        
-    
+
+### GUI ###
     if Menus == True:
         screen.blit(MenuScreen, (0,0))
 
         if MenuScreen == Victory:
             for event in pygame.event.get():
-                if event.key == pygame.K_ESCAPE:
-                    done = True
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        done = True
 
         elif MenuScreen == GameOver:
             for event in pygame.event.get():
-                if event.key == pygame.K_ESCAPE:
-                    done = True
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        done = True
 
         else:
             
@@ -610,6 +502,8 @@ while not done:
 
         #Refresh screen
         pygame.display.update()
+
+### GUI end ###
         
         
     else:
@@ -622,7 +516,8 @@ while not done:
         AICoord = AIrobot.rect.center
         AICoord_x, AICoord_y = AICoord
 
-        ## AI running code ##
+### AI running code ###
+        
         #limit AI moves per second
         tick += 1
         
@@ -635,70 +530,75 @@ while not done:
 
             #Left
             if move == 0:
-                AIrobot.change_x = -3 
+                AIrobot.xMoveSpeed = -3 
 
             #Right       
             if move == 1:
-                AIrobot.change_x = 3
+                AIrobot.xMoveSpeed = 3
 
             #Up        
             if move == 2:
-                AIrobot.change_y = -3
+                AIrobot.yMoveSpeed = -3
 
             #Down        
             if move == 3:
-                AIrobot.change_y = 3
+                AIrobot.yMoveSpeed = 3
 
         #Reset AI speed to move in new direction            
         elif tick == 31:
             if move == 0:
-                AIrobot.change_x = 0
+                AIrobot.xMoveSpeed = 0
             if move == 1:
-                AIrobot.change_x = 0
+                AIrobot.xMoveSpeed = 0
             if move == 2:
-                AIrobot.change_y = 0
+                AIrobot.yMoveSpeed = 0
             if move == 3:
-                AIrobot.change_y = 0
+                AIrobot.yMoveSpeed = 0
             tick = 0
 
-
-          
+### AI running code end ###
+       
         for event in pygame.event.get():
 
             #Quits game window
             if event.type == pygame.QUIT:
                 done = True
 
-            ## Player runnung code ## 
+### Player running code ###
+                
             #When arrow keys are pressed
             elif event.type == pygame.KEYDOWN:
                 
                 #Left key pressed
                 if event.key == pygame.K_LEFT:
-                    player.changespeed(-speed, 0)
+                    player.playerSpeed(-speed, 0)
 
                 #Right key pressed
                 elif event.key == pygame.K_RIGHT:
-                    player.changespeed(speed, 0)
+                    player.playerSpeed(speed, 0)
 
                 #Up key pressed
                 elif event.key == pygame.K_UP:
-                    player.changespeed(0, -speed)
+                    player.playerSpeed(0, -speed)
 
                 #Down key pressed
                 elif event.key == pygame.K_DOWN:
-                    player.changespeed(0, speed)
+                    player.playerSpeed(0, speed)
          
             #When keys are released, reset player model speed
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
-                    player.changespeed(speed, 0)
+                    player.playerSpeed(speed, 0)
                 elif event.key == pygame.K_RIGHT:
-                    player.changespeed(-speed, 0)
+                    player.playerSpeed(-speed, 0)
                 elif event.key == pygame.K_UP:
-                    player.changespeed(0, speed)
+                    player.playerSpeed(0, speed)
                 elif event.key == pygame.K_DOWN:
-                    player.changespeed(0, -speed)
+                    player.playerSpeed(0, -speed)
+                    
+### PLayer running code end ###
+
+### Win / Lose conditions ###
 
         #Player passes onto block to pick up key
         if ((playerCoord_x > 200) and (playerCoord_x < 240)) and ((playerCoord_y > 400) and (playerCoord_y < 440)):
@@ -715,12 +615,17 @@ while not done:
         if ((playerCoord_x - 10) < (AICoord_x + 10)) and ((playerCoord_x + 10) > (AICoord_x - 10)) and ((playerCoord_y - 10) < (AICoord_y + 10)) and ((playerCoord_y + 10) > (AICoord_y - 10)):
             MenuScreen = GameOver
             Menus = True
+
+### Win / Lose conditions end ###
             
 
           
-        #Game Logic
+        #Update Sprite list
         all_sprites_list.update()
-            
+
+        #Draw wall sprites
+        wall_list.draw(screen)  
+
         #Re-print image of map to remove sprite trails
         screen.blit(backgroundImage, (0, 0))
             
