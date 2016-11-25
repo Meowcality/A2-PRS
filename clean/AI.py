@@ -44,15 +44,15 @@ class Com(pygame.sprite.Sprite):
         self.rect.y += self.yMoveSpeed
  
         #Checks for collision with other sprites
-        block_hit_list = pygame.sprite.spritecollide(self, self.walls, False)
-        for block in block_hit_list:
+        check_collision = pygame.sprite.spritecollide(self, self.walls, False)
+        for collision in check_collision:
  
             #front becomes direction of travel
             if self.yMoveSpeed > 0:
-                self.rect.bottom = block.rect.top
+                self.rect.bottom = collision.rect.top
 
             #front becomes direction of travel
             else:
-                self.rect.top = block.rect.bottom
+                self.rect.top = collision.rect.bottom
     ### End of Mateusz contribution ### 
 
