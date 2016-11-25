@@ -8,23 +8,34 @@ from Robot import Wall
 pygame.init()
 
 from AI import Com
-from AI import Wall
 pygame.init()
 
 from random import randint
 
-imageMap = pygame.image.load("imageMap.png")
+Key = False
+Door = False
 
-#GREEN = (20, 255, 140)
-#GREY = (210, 210, 210)
-#WHITE = (255, 255, 255)
+#Images of states of the map
+#No Key, No Door
+imageMap = pygame.image.load("imageMap.png")
+#Key, No Door
+imageMap2 = pygame.image.load("imageMap2.png")
+#Key and door
+imageMap3 = pygame.image.load("imageMap3.png")
+
+#Image of current state of map
+backgroundImage = imageMap
+
+#Colours
 RED = (255, 0, 0)
 PURPLE = (255, 0, 255)
 BLACK = (0, 0, 0)
 
+#Initialise Display window
 screen = pygame.display.set_mode()
-pygame.display.set_caption("VRS")
+pygame.display.set_caption("Virtual Robot Simulator")
 
+#Sprite groups
 all_sprites_list = pygame.sprite.Group()
 wall_list = pygame.sprite.Group()
 
@@ -518,20 +529,31 @@ AIrobot.walls = wall_list
 all_sprites_list.add(player)
 all_sprites_list.add(AIrobot)
 
-done = False
 
+#Initialise Map
 mapp()
 
-
-
+#Variables
 clock = pygame.time.Clock()
+done = False
 tick = 0
 move = 0
+speed = 30
 
+#Main running loop
 while not done:
 
     clock.tick(60)
 
+    #Current player coordinates
+    playerCoord = player.rect.center
+    playerCoord_x, playerCoord_y = playerCoord
+
+    #Current AI coordinates
+    AICoord = AIrobot.rect.center
+    AICoord_x, AICoord_y = AICoord
+
+    ## AI running code ##
     #limit AI moves per second
     tick += 1
     
@@ -539,6 +561,7 @@ while not done:
     if tick == 1:
         move = randint(0,3)
         
+    #Limits AI moves per second
     if tick %3 == 0:
 
         #Left
@@ -556,7 +579,8 @@ while not done:
         #Down        
         if move == 3:
             AIrobot.change_y = 3
-                
+
+    #Reset AI speed to move in new direction            
     elif tick == 31:
         if move == 0:
             AIrobot.change_x = 0
@@ -569,39 +593,70 @@ while not done:
         tick = 0
 
 
-        
+      
     for event in pygame.event.get():
+
+        #Quits game window
         if event.type == pygame.QUIT:
             done = True
- 
+
+        ## Player runnung code ## 
+        #When arrow keys are pressed
         elif event.type == pygame.KEYDOWN:
+            
+            #Left key pressed
             if event.key == pygame.K_LEFT:
-                player.changespeed(-3, 0)
+                player.changespeed(-speed, 0)
+
+            #Right key pressed
             elif event.key == pygame.K_RIGHT:
-                player.changespeed(3, 0)
+                player.changespeed(speed, 0)
+
+            #Up key pressed
             elif event.key == pygame.K_UP:
-                player.changespeed(0, -3)
+                player.changespeed(0, -speed)
+
+            #Down key pressed
             elif event.key == pygame.K_DOWN:
-                player.changespeed(0, 3)
+                player.changespeed(0, speed)
      
+        #When keys are released, reset player model speed
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
-                player.changespeed(3, 0)
+                player.changespeed(speed, 0)
             elif event.key == pygame.K_RIGHT:
-                player.changespeed(-3, 0)
+                player.changespeed(-speed, 0)
             elif event.key == pygame.K_UP:
-                player.changespeed(0, 3)
+                player.changespeed(0, speed)
             elif event.key == pygame.K_DOWN:
-                player.changespeed(0, -3)
+                player.changespeed(0, -speed)
 
+    #Player passes onto block to pick up key
+    if ((playerCoord_x > 200) and (playerCoord_x < 240)) and ((playerCoord_y > 400) and (playerCoord_y < 440)):
+        Key = True
+        backgroundImage = imageMap2
 
-
+    #player passes onto door to unlock door - only works if key has been picked up
+    if (Key == True) and ((playerCoord_x > 40) and (playerCoord_x < 80)) and ((playerCoord_y > 40) and (playerCoord_y < 80)):
+        Door = True
+        backgroundImage = imageMap3
         
+    #When door is unlocked
+    if Door == True:
+        #Perform action
+        screen.blit(imageMap3, (0, 0))
+        
+    #When player collides with AI
+    if ((playerCoord_x - 10) < (AICoord_x + 10)) and ((playerCoord_x + 10) > (AICoord_x - 10)) and ((playerCoord_y - 10) < (AICoord_y + 10)) and ((playerCoord_y + 10) > (AICoord_y - 10)):
+        print("Collision")##Remove whem end game screen is added
+        ##### End game screen #####
+
+      
     #Game Logic
     all_sprites_list.update()
         
-    screen.blit(imageMap, (0, 0))
-    #mapp()
+    #Re-print image of map to remove sprite trails
+    screen.blit(backgroundImage, (0, 0))
         
     #Draw all sprites
     all_sprites_list.draw(screen)
@@ -609,5 +664,5 @@ while not done:
     #Refresh screen
     pygame.display.update()
 
-
+#Quit game
 pygame.quit()
