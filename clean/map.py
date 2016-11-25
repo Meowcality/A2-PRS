@@ -1,4 +1,4 @@
-""" Contribution of Gabriel and Bogdan"""
+""" Contribution of Gabriel """
 import pygame, sys
 from pygame.locals import *
 
@@ -78,5 +78,5 @@ def mapp() :
             pygame.draw.rect(DISPLAYSURF, tilemap[row][column], (column*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE))
 mapp()
 
-"""Contribution of Gabriel and Bogdan"""
+"""Contribution of Gabriel """
         
