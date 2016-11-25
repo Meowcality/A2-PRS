@@ -36,7 +36,7 @@ MenuScreen = MainMenu
 
 ###### Jamel end ######
 
-###### Mathew ######
+###### Matthew ######
 
 #Images of states of the map
 #Not collected key
@@ -47,7 +47,7 @@ imageMap2 = pygame.image.load("imageMap2.png")
 #Image of current state of map
 backgroundImage = imageMap
 
-###### Mathew end ######
+###### Matthew end ######
 
 #Colours
 RED = (255, 0, 0)
@@ -69,7 +69,7 @@ all_sprites_list = pygame.sprite.Group()
 
 ###### James end ######
 
-###### Mathew ######
+###### Matthew ######
 
 wall_list = pygame.sprite.Group()
 
@@ -215,7 +215,7 @@ for coordinate in aalist:
           
 ### Wall sprrites end ###
 
-###### Mathew end ######
+###### Matthew end ######
 
 ###### James ######
     
@@ -444,12 +444,12 @@ while not done:
 
 ###### James end ######
 
-###### Mathew ######
+###### Matthew ######
 
         #Draw wall sprites
         wall_list.draw(screen)  
 
-###### Mathew end ######
+###### Matthew end ######
 
 ###### James ######
         
