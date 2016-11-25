@@ -71,17 +71,11 @@ def mapp() :
     ## After going through the rows and each element of them, we need to display a square representing the map on the screen at the right position
     ## column*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE represents the area of the rectangle,
     ## DISPLAYSURF represents the surface where the rectangle is drawn
-    ## tilemap[row][column] represents the colours that are used to fill in the rectangles for our map
-    
-    while True :
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-        for row in range(1,MAPHEIGHT):
-            for column in range(1,MAPWIDTH):
-                pygame.draw.rect(DISPLAYSURF, tilemap[row][column], (column*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE))
-        pygame.display.update()
+    ## tilemap[row][column] represents the colours that are used to fill in the rectangles for our map    
+    ## there is no output display due to the fact that the display command is missing(present in the main file)
+    for row in range(1,MAPHEIGHT):
+        for column in range(1,MAPWIDTH):
+            pygame.draw.rect(DISPLAYSURF, tilemap[row][column], (column*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE))
 mapp()
 
 """Contribution of Gabriel"""
