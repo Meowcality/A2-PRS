@@ -7,6 +7,12 @@ from Robot import Player
 from Robot import Wall
 pygame.init()
 
+from AI import Com
+from AI import Wall
+pygame.init()
+
+from random import randint
+
 imageMap = pygame.image.load("imageMap.png")
 
 #GREEN = (20, 255, 140)
@@ -504,9 +510,14 @@ all_sprites_list.add(wall)
 
 # Create the player paddle object
 player = Player(1530, 650)
+AIrobot = Com(880, 310)
+
 player.walls = wall_list
+AIrobot.walls = wall_list
  
 all_sprites_list.add(player)
+all_sprites_list.add(AIrobot)
+
 done = False
 
 mapp()
@@ -514,11 +525,51 @@ mapp()
 
 
 clock = pygame.time.Clock()
+tick = 0
+move = 0
 
 while not done:
 
     clock.tick(60)
- 
+
+    #limit AI moves per second
+    tick += 1
+    
+    #Moves 1 block before changing direction
+    if tick == 1:
+        move = randint(0,3)
+        
+    if tick %3 == 0:
+
+        #Left
+        if move == 0:
+            AIrobot.change_x = -3 
+
+        #Right       
+        if move == 1:
+            AIrobot.change_x = 3
+
+        #Up        
+        if move == 2:
+            AIrobot.change_y = -3
+
+        #Down        
+        if move == 3:
+            AIrobot.change_y = 3
+                
+    elif tick == 31:
+        if move == 0:
+            AIrobot.change_x = 0
+        if move == 1:
+            AIrobot.change_x = 0
+        if move == 2:
+            AIrobot.change_y = 0
+        if move == 3:
+            AIrobot.change_y = 0
+        tick = 0
+
+
+        
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
@@ -542,6 +593,8 @@ while not done:
                 player.changespeed(0, 3)
             elif event.key == pygame.K_DOWN:
                 player.changespeed(0, -3)
+
+
 
         
     #Game Logic
