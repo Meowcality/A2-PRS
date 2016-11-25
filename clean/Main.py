@@ -12,8 +12,19 @@ pygame.init()
 
 from random import randint
 
-Key = False
-Door = False
+### GUI ###
+
+#Import Images
+MainMenu = pygame.image.load("MainMenu.png")
+Instructions = pygame.image.load("Instructions.png")
+Controls = pygame.image.load("Controls.png")
+Victory = pygame.image.load("Victory.png")
+GameOver = pygame.image.load("GameOver.png")
+
+#Current menu page
+MenuScreen = MainMenu
+
+### GUI ###
 
 #Images of states of the map
 #No Key, No Door
@@ -535,134 +546,189 @@ mapp()
 
 #Variables
 clock = pygame.time.Clock()
+Menus = True
 done = False
+Key = False
+Door = False
 tick = 0
 move = 0
-speed = 30
+speed = 5
+   
 
 #Main running loop
 while not done:
 
-    clock.tick(60)
-
-    #Current player coordinates
-    playerCoord = player.rect.center
-    playerCoord_x, playerCoord_y = playerCoord
-
-    #Current AI coordinates
-    AICoord = AIrobot.rect.center
-    AICoord_x, AICoord_y = AICoord
-
-    ## AI running code ##
-    #limit AI moves per second
-    tick += 1
+    clock.tick(60)        
     
-    #Moves 1 block before changing direction
-    if tick == 1:
-        move = randint(0,3)
-        
-    #Limits AI moves per second
-    if tick %3 == 0:
+    if Menus == True:
+        screen.blit(MenuScreen, (0,0))
 
-        #Left
-        if move == 0:
-            AIrobot.change_x = -3 
+        if MenuScreen == Victory:
+            for event in pygame.event.get():
+                if event.key == pygame.K_ESCAPE:
+                    done = True
 
-        #Right       
-        if move == 1:
-            AIrobot.change_x = 3
+        elif MenuScreen == GameOver:
+            for event in pygame.event.get():
+                if event.key == pygame.K_ESCAPE:
+                    done = True
 
-        #Up        
-        if move == 2:
-            AIrobot.change_y = -3
-
-        #Down        
-        if move == 3:
-            AIrobot.change_y = 3
-
-    #Reset AI speed to move in new direction            
-    elif tick == 31:
-        if move == 0:
-            AIrobot.change_x = 0
-        if move == 1:
-            AIrobot.change_x = 0
-        if move == 2:
-            AIrobot.change_y = 0
-        if move == 3:
-            AIrobot.change_y = 0
-        tick = 0
-
-
-      
-    for event in pygame.event.get():
-
-        #Quits game window
-        if event.type == pygame.QUIT:
-            done = True
-
-        ## Player runnung code ## 
-        #When arrow keys are pressed
-        elif event.type == pygame.KEYDOWN:
+        else:
             
-            #Left key pressed
-            if event.key == pygame.K_LEFT:
-                player.changespeed(-speed, 0)
+            for event in pygame.event.get():
 
-            #Right key pressed
-            elif event.key == pygame.K_RIGHT:
-                player.changespeed(speed, 0)
+                #Quits game window (Press x in upper right corner)
+                if event.type == pygame.QUIT:
+                    done = True
 
-            #Up key pressed
-            elif event.key == pygame.K_UP:
-                player.changespeed(0, -speed)
+                #if key is pressed 
+                elif event.type == pygame.KEYDOWN:
 
-            #Down key pressed
-            elif event.key == pygame.K_DOWN:
-                player.changespeed(0, speed)
-     
-        #When keys are released, reset player model speed
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT:
-                player.changespeed(speed, 0)
-            elif event.key == pygame.K_RIGHT:
-                player.changespeed(-speed, 0)
-            elif event.key == pygame.K_UP:
-                player.changespeed(0, speed)
-            elif event.key == pygame.K_DOWN:
-                player.changespeed(0, -speed)
+                    #if left key is pressed
+                    if event.key == pygame.K_LEFT:
+                        MenuScreen = Instructions
+                        screen.blit(Instructions, (0,0))
 
-    #Player passes onto block to pick up key
-    if ((playerCoord_x > 200) and (playerCoord_x < 240)) and ((playerCoord_y > 400) and (playerCoord_y < 440)):
-        Key = True
-        backgroundImage = imageMap2
+                    #if right key is pressed
+                    elif event.key == pygame.K_RIGHT:
+                        MenuScreen = Controls
+                        screen.blit(Controls, (0,0))
+                        
+                    #if down key is pressed    
+                    elif event.key == pygame.K_DOWN:
+                        done = True
 
-    #player passes onto door to unlock door - only works if key has been picked up
-    if (Key == True) and ((playerCoord_x > 40) and (playerCoord_x < 80)) and ((playerCoord_y > 40) and (playerCoord_y < 80)):
-        Door = True
-        backgroundImage = imageMap3
+                    elif event.key == pygame.K_ESCAPE:
+                        MenuScreen = MainMenu
+
+                #Begin game
+                elif event.type == pygame.KEYUP:
+
+                    if event.key == pygame.K_UP:
+                        Menus = False
+
+
+        #Refresh screen
+        pygame.display.update()
         
-    #When door is unlocked
-    if Door == True:
-        #Perform action
-        screen.blit(imageMap3, (0, 0))
         
-    #When player collides with AI
-    if ((playerCoord_x - 10) < (AICoord_x + 10)) and ((playerCoord_x + 10) > (AICoord_x - 10)) and ((playerCoord_y - 10) < (AICoord_y + 10)) and ((playerCoord_y + 10) > (AICoord_y - 10)):
-        print("Collision")##Remove whem end game screen is added
-        ##### End game screen #####
+    else:
 
-      
-    #Game Logic
-    all_sprites_list.update()
-        
-    #Re-print image of map to remove sprite trails
-    screen.blit(backgroundImage, (0, 0))
-        
-    #Draw all sprites
-    all_sprites_list.draw(screen)
+        #Current player coordinates
+        playerCoord = player.rect.center
+        playerCoord_x, playerCoord_y = playerCoord
 
-    #Refresh screen
-    pygame.display.update()
+        #Current AI coordinates
+        AICoord = AIrobot.rect.center
+        AICoord_x, AICoord_y = AICoord
+
+        ## AI running code ##
+        #limit AI moves per second
+        tick += 1
+        
+        #Moves 1 block before changing direction
+        if tick == 1:
+            move = randint(0,3)
+            
+        #Limits AI moves per second
+        if tick %3 == 0:
+
+            #Left
+            if move == 0:
+                AIrobot.change_x = -3 
+
+            #Right       
+            if move == 1:
+                AIrobot.change_x = 3
+
+            #Up        
+            if move == 2:
+                AIrobot.change_y = -3
+
+            #Down        
+            if move == 3:
+                AIrobot.change_y = 3
+
+        #Reset AI speed to move in new direction            
+        elif tick == 31:
+            if move == 0:
+                AIrobot.change_x = 0
+            if move == 1:
+                AIrobot.change_x = 0
+            if move == 2:
+                AIrobot.change_y = 0
+            if move == 3:
+                AIrobot.change_y = 0
+            tick = 0
+
+
+          
+        for event in pygame.event.get():
+
+            #Quits game window
+            if event.type == pygame.QUIT:
+                done = True
+
+            ## Player runnung code ## 
+            #When arrow keys are pressed
+            elif event.type == pygame.KEYDOWN:
+                
+                #Left key pressed
+                if event.key == pygame.K_LEFT:
+                    player.changespeed(-speed, 0)
+
+                #Right key pressed
+                elif event.key == pygame.K_RIGHT:
+                    player.changespeed(speed, 0)
+
+                #Up key pressed
+                elif event.key == pygame.K_UP:
+                    player.changespeed(0, -speed)
+
+                #Down key pressed
+                elif event.key == pygame.K_DOWN:
+                    player.changespeed(0, speed)
+         
+            #When keys are released, reset player model speed
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    player.changespeed(speed, 0)
+                elif event.key == pygame.K_RIGHT:
+                    player.changespeed(-speed, 0)
+                elif event.key == pygame.K_UP:
+                    player.changespeed(0, speed)
+                elif event.key == pygame.K_DOWN:
+                    player.changespeed(0, -speed)
+
+        #Player passes onto block to pick up key
+        if ((playerCoord_x > 200) and (playerCoord_x < 240)) and ((playerCoord_y > 400) and (playerCoord_y < 440)):
+            Key = True
+            backgroundImage = imageMap2
+
+        #player passes onto door to unlock door - only works if key has been picked up
+        if (Key == True) and ((playerCoord_x > 40) and (playerCoord_x < 80)) and ((playerCoord_y > 40) and (playerCoord_y < 80)):
+            Door = True
+            MenuScreen = Victory
+            Menus = True
+            
+        #When player collides with AI
+        if ((playerCoord_x - 10) < (AICoord_x + 10)) and ((playerCoord_x + 10) > (AICoord_x - 10)) and ((playerCoord_y - 10) < (AICoord_y + 10)) and ((playerCoord_y + 10) > (AICoord_y - 10)):
+            MenuScreen = GameOver
+            Menus = True
+            
+
+          
+        #Game Logic
+        all_sprites_list.update()
+            
+        #Re-print image of map to remove sprite trails
+        screen.blit(backgroundImage, (0, 0))
+            
+        #Draw all sprites
+        all_sprites_list.draw(screen)
+
+        #Refresh screen
+        pygame.display.update()
 
 #Quit game
 pygame.quit()
